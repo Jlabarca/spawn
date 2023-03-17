@@ -12,8 +12,8 @@ PlayerSettings:
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
-  companyName: JonasHahn
-  productName: SolHunter
+  companyName: JLabarca
+  productName: Spawn
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenBackgroundColor: {r: 0.13725491, g: 0.12156863, b: 0.1254902, a: 1}
@@ -134,7 +134,7 @@ PlayerSettings:
     16:10: 1
     16:9: 1
     Others: 1
-  bundleVersion: 0.01
+  bundleVersion: 0.0.1
   preloadedAssets: []
   metroInputSource: 0
   wsaTransparentSwapchain: 0
@@ -277,7 +277,7 @@ PlayerSettings:
   - m_BuildTarget: 
     m_Icons:
     - serializedVersion: 2
-      m_Icon: {fileID: 2800000, guid: d3dca9b8f9c34483d8fd1f9e48087aa3, type: 3}
+      m_Icon: {fileID: 2800000, guid: 04367391df7624329a446786504050f8, type: 3}
       m_Width: 128
       m_Height: 128
       m_Kind: 0
@@ -812,7 +812,7 @@ PlayerSettings:
   webGLTemplate: PROJECT:SolanaWebGlTemplate
   webGLAnalyzeBuildSize: 0
   webGLUseEmbeddedResources: 0
-  webGLCompressionFormat: 2
+  webGLCompressionFormat: 0
   webGLWasmArithmeticExceptions: 0
   webGLLinkerTarget: 1
   webGLThreadsSupport: 0
@@ -900,7 +900,7 @@ PlayerSettings:
     Build: 0
     Collab: 0
     Game Performance: 0
-    Purchasing: 1
+    Purchasing: 0
     UDP: 0
     UNet: 1
     Unity Ads: 0
@@ -918,11 +918,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: 794121f6-8672-488d-9b48-d44662bc3c82
+  cloudProjectId: 6413f2e9-2c20-450a-8d15-ce8d6b8c503f
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: Solana Jump
-  organizationId: crabgames
+  projectName: Spawn
+  organizationId: julio-labarca
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 
