@@ -149,9 +149,9 @@ jobs:
       - name: Deploy file
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
-            username: '${{ secrets.FTP_USER }}'
             server: '${{ secrets.FTP_SERVER }}'
-            ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+            username: '${{ secrets.FTP_USER }}'
+            password: '${{ secrets.FTP_PASSWORD }}'
             local_path: './build/${{ needs.variables.outputs.BUILD_NAME }}/'
             remote_path: './html/${{ needs.variables.outputs.TAG }}/'
             sftpArgs: '-o ConnectTimeout=5'
