@@ -151,7 +151,6 @@ jobs:
         with:
             server: ${{ secrets.FTP_SERVER }}
             username: ${{ secrets.FTP_USERNAME }}
-            password: ${{ secrets.FTP_PASSWORD }}
             ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
             local_path: './build/${{ needs.variables.outputs.BUILD_NAME }}/'
             remote_path: './html/${{ needs.variables.outputs.TAG }}/'
