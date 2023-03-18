@@ -132,7 +132,7 @@ jobs:
     name: Deploy on server 🚀
     needs: [ variables, buildProject ]
     # Guarded by username, if you want to do something sinilar remove the next line
-    if: ${{ github.repository_owner == 'JohannesDeml' }}
+    # if: ${{ github.repository_owner == 'JohannesDeml' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
