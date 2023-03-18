@@ -2,8 +2,13 @@
 name: Build project & release
 
 on:
-  workflow_dispatch: {}
-
+  workflow_dispatch:
+    inputs:
+      live:
+        description: 'live to web server root'
+        required: true
+        type: boolean
+        default: false
 jobs:
   variables:
     name: Define variables 🔗
@@ -26,8 +31,13 @@ jobs:
 
       - name: Set tag
         id: set_tag
-        #run: echo "VERSION=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_OUTPUT
-        run: echo "VERSION=dev" >> $GITHUB_OUTPUT
+        run: |
+          VERSION=${GITHUB_REF/refs\/tags\//}
+          VERSION=${VERSION//\//_}
+          if [ -z "$VERSION" ]; then
+            VERSION=empty
+          fi
+          echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Set target name
         id: set_build_name
@@ -128,10 +138,8 @@ jobs:
 
 
   deployOnServer:
-    name: Deploy on server 🚀
+    name: Deploy to web server 🚀
     needs: [ variables, buildProject ]
-    # Guarded by username, if you want to do something sinilar remove the next line
-    # if: ${{ github.repository_owner == 'JohannesDeml' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -146,12 +154,36 @@ jobs:
         run: ls -R
         working-directory: build/${{ needs.variables.outputs.BUILD_NAME }}
 
-      - name: Deploy file
+      - name: Deploy
+        #if: ${{!inputs.live}}
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
             server: '${{ secrets.FTP_SERVER }}'
             username: '${{ secrets.FTP_USER }}'
             password: '${{ secrets.FTP_PASSWORD }}'
             local_path: './build/${{ needs.variables.outputs.BUILD_NAME }}/'
-            remote_path: './html/${{ needs.variables.outputs.TAG }}/'
+            remote_path: './${{ needs.variables.outputs.TAG}}/'
             sftpArgs: '-o ConnectTimeout=5'
+
+      - name: Deploy to live
+        if: ${{inputs.live}}
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          script: |
+            rm -rf ./html
+            mkdir html
+            rsync -a ./${{ needs.variables.outputs.TAG}}/ ./html/
+
+      # - name: Deploy to live
+      #   if: ${{inputs.live}}
+      #   uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+      #   with:
+      #       server: '${{ secrets.FTP_SERVER }}'
+      #       username: '${{ secrets.FTP_USER }}'
+      #       password: '${{ secrets.FTP_PASSWORD }}'
+      #       local_path: './build/${{ needs.variables.outputs.BUILD_NAME }}/${{ needs.variables.outputs.TAG }}/'
+      #       remote_path: './html/'
+      #       sftpArgs: '-o ConnectTimeout=5'
