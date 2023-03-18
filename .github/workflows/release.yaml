@@ -1,11 +1,21 @@
-# Build and upload the project by pushing tags
+# Build and upload the project by pushing tags (also works manually)
 name: Build project & release
 
 on:
   workflow_dispatch:
     inputs:
-      live:
-        description: 'live to web server root'
+      live_production:
+        description: 'Live to production'
+        required: true
+        type: boolean
+        default: false
+      live_development:
+        description: 'Live to develop'
+        required: true
+        type: boolean
+        default: false
+      release:
+        description: 'Create github release'
         required: true
         type: boolean
         default: false
@@ -34,9 +44,6 @@ jobs:
         run: |
           VERSION=${GITHUB_REF/refs\/tags\//}
           VERSION=${VERSION//\//_}
-          if [ -z "$VERSION" ]; then
-            VERSION=empty
-          fi
           echo "VERSION=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Set target name
@@ -117,8 +124,7 @@ jobs:
 
   createRelease:
     name: Create Github release 🐙
-    # only run for the pure tag without build parameters
-    if: ${{ needs.variables.outputs.TAG == needs.variables.outputs.UNITY_VERSION }}
+    if: ${{inputs.release}}
     needs: [ variables ]
     runs-on: ubuntu-latest
     steps:
@@ -155,7 +161,6 @@ jobs:
         working-directory: build/${{ needs.variables.outputs.BUILD_NAME }}
 
       - name: Deploy
-        #if: ${{!inputs.live}}
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
             server: '${{ secrets.FTP_SERVER }}'
@@ -165,8 +170,8 @@ jobs:
             remote_path: './${{ needs.variables.outputs.TAG}}/'
             sftpArgs: '-o ConnectTimeout=5'
 
-      - name: Deploy to live
-        if: ${{inputs.live}}
+      - name: Live to production
+        if: ${{inputs.live_production}}
         uses: appleboy/ssh-action@v0.1.8
         with:
           host: ${{ secrets.FTP_SERVER }}
@@ -175,15 +180,16 @@ jobs:
           script: |
             rm -rf ./html
             mkdir html
-            rsync -a ./${{ needs.variables.outputs.TAG}}/ ./html/
+            rsync -a ./${{ needs.variables.outputs.TAG}}/${{ needs.variables.outputs.BUILD_NAME }} ./html/
 
-      # - name: Deploy to live
-      #   if: ${{inputs.live}}
-      #   uses: wlixcc/SFTP-Deploy-Action@v1.2.4
-      #   with:
-      #       server: '${{ secrets.FTP_SERVER }}'
-      #       username: '${{ secrets.FTP_USER }}'
-      #       password: '${{ secrets.FTP_PASSWORD }}'
-      #       local_path: './build/${{ needs.variables.outputs.BUILD_NAME }}/${{ needs.variables.outputs.TAG }}/'
-      #       remote_path: './html/'
-      #       sftpArgs: '-o ConnectTimeout=5'
+      - name: Live to development
+        if: ${{inputs.live_development}}
+        uses: appleboy/ssh-action@v0.1.8
+        with:
+          host: ${{ secrets.FTP_SERVER }}
+          username: ${{ secrets.FTP_USER }}
+          password: ${{ secrets.FTP_PASSWORD }}
+          script: |
+            rm -rf ./html/dev/
+            mkdir ./html/dev/
+            rsync -a ./${{ needs.variables.outputs.TAG}}/${{ needs.variables.outputs.BUILD_NAME }} ./html/dev/
