@@ -151,7 +151,7 @@ jobs:
           server: ${{ secrets.FTP_SERVER }}
           username: ${{ secrets.FTP_USER }}
           password: ${{ secrets.FTP_PASSWORD }}
-          port: 21
-          protocol: ftps
+          port: 22
+          protocol: sftp
           local-dir: ./build/${{ needs.variables.outputs.BUILD_NAME }}/
           server-dir: ./${{ needs.variables.outputs.TAG }}/
