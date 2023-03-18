@@ -38,25 +38,25 @@ jobs:
           echo "TAG -> ${{ steps.set_tag.outputs.VERSION }}"
           echo "BUILD_NAME -> ${{ steps.set_build_name.outputs.VERSION }}"
 
-  # tagVersionMatchTest:
-  #   needs: [ variables ]
-  #   name: Check tag version match ☑
-  #   runs-on: ubuntu-latest
-  #   steps:
+  tagVersionMatchTest:
+    needs: [ variables ]
+    name: Check tag version match ☑
+    runs-on: ubuntu-latest
+    steps:
 
-  #     - name: Log tag and version
-  #       run: echo "Github tag '${{ needs.variables.outputs.TAG }}' has to start with unity version '${{ needs.variables.outputs.UNITY_VERSION }}'"
+      - name: Log tag and version
+        run: echo "Github tag '${{ needs.variables.outputs.TAG }}' has to start with unity version '${{ needs.variables.outputs.UNITY_VERSION }}'"
 
-  #     - name: Version match ✔
-  #       if: startsWith(${{ needs.variables.outputs.TAG }}, {{ needs.variables.outputs.UNITY_VERSION }}
-  #       run: echo "Versions are matching 🥳"
+      - name: Version match ✔
+        if: startsWith(${{ needs.variables.outputs.TAG }}, {{ needs.variables.outputs.UNITY_VERSION }}
+        run: echo "Versions are matching 🥳"
 
-  #     - name: Version missmatch ❌
-  #       if: ${{ !startsWith(needs.variables.outputs.TAG, needs.variables.outputs.UNITY_VERSION) }}
-  #       uses: actions/github-script@v3
-  #       with:
-  #         script: |
-  #             core.setFailed('Unity version does not match tag version')
+      - name: Version missmatch ❌
+        if: ${{ !startsWith(needs.variables.outputs.TAG, needs.variables.outputs.UNITY_VERSION) }}
+        uses: actions/github-script@v3
+        with:
+          script: |
+              core.setFailed('Unity version does not match tag version')
 
   buildProject:
     name: Create Unity WebGL Build 🏗
@@ -145,13 +145,12 @@ jobs:
         run: ls -R
         working-directory: build/${{ needs.variables.outputs.BUILD_NAME }}
 
-      - name: Deploy ⤴
-        uses: SamKirkland/FTP-Deploy-Action@4.3.3
+      - name: Deploy file
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
-          server: ${{ secrets.FTP_SERVER }}
-          username: ${{ secrets.FTP_USER }}
-          password: ${{ secrets.FTP_PASSWORD }}
-          port: 22
-          protocol: sftp
-          local-dir: ./build/${{ needs.variables.outputs.BUILD_NAME }}/
-          server-dir: ./${{ needs.variables.outputs.TAG }}/
+            server: ${{ secrets.FTP_SERVER }}
+            username: ${{ secrets.FTP_USERNAME }}
+            password: ${{ secrets.FTP_PASSWORD }}
+            local_path: './build/${{ needs.variables.outputs.BUILD_NAME }}/'
+            remote_path: './html/${{ needs.variables.outputs.TAG }}/'
+            sftp_only: true
