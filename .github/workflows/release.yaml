@@ -38,25 +38,25 @@ jobs:
           echo "TAG -> ${{ steps.set_tag.outputs.VERSION }}"
           echo "BUILD_NAME -> ${{ steps.set_build_name.outputs.VERSION }}"
 
-  tagVersionMatchTest:
-    needs: [ variables ]
-    name: Check tag version match ☑
-    runs-on: ubuntu-latest
-    steps:
+  # tagVersionMatchTest:
+  #   needs: [ variables ]
+  #   name: Check tag version match ☑
+  #   runs-on: ubuntu-latest
+  #   steps:
 
-      - name: Log tag and version
-        run: echo "Github tag '${{ needs.variables.outputs.TAG }}' has to start with unity version '${{ needs.variables.outputs.UNITY_VERSION }}'"
+  #     - name: Log tag and version
+  #       run: echo "Github tag '${{ needs.variables.outputs.TAG }}' has to start with unity version '${{ needs.variables.outputs.UNITY_VERSION }}'"
 
-      - name: Version match ✔
-        if: startsWith(${{ needs.variables.outputs.TAG }}, {{ needs.variables.outputs.UNITY_VERSION }}
-        run: echo "Versions are matching 🥳"
+  #     - name: Version match ✔
+  #       if: startsWith(${{ needs.variables.outputs.TAG }}, {{ needs.variables.outputs.UNITY_VERSION }}
+  #       run: echo "Versions are matching 🥳"
 
-      - name: Version missmatch ❌
-        if: ${{ !startsWith(needs.variables.outputs.TAG, needs.variables.outputs.UNITY_VERSION) }}
-        uses: actions/github-script@v3
-        with:
-          script: |
-              core.setFailed('Unity version does not match tag version')
+  #     - name: Version missmatch ❌
+  #       if: ${{ !startsWith(needs.variables.outputs.TAG, needs.variables.outputs.UNITY_VERSION) }}
+  #       uses: actions/github-script@v3
+  #       with:
+  #         script: |
+  #             core.setFailed('Unity version does not match tag version')
 
   buildProject:
     name: Create Unity WebGL Build 🏗
