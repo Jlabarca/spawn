@@ -24,9 +24,16 @@ jobs:
           UNITY_VERSION=$(sed -n 's/^\m_EditorVersion: //p'< ./ProjectSettings/ProjectVersion.txt)
           echo "VERSION=$UNITY_VERSION" >> $GITHUB_OUTPUT
 
+      #modified to set tag = dev if there is no tag
       - name: Set tag
         id: set_tag
-        run: echo "VERSION=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_OUTPUT
+        run: |
+          if git tag --points-at HEAD > /dev/null 2>&1; then
+            echo "VERSION=${GITHUB_REF/refs\/tags\//}" >> $GITHUB_OUTPUT
+          else
+            echo "VERSION=dev" >> $GITHUB_OUTPUT
+          fi
+
 
       - name: Set target name
         id: set_build_name
