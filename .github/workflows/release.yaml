@@ -22,7 +22,7 @@ on:
         default: false
 
 env:
-  PROJECT_PATH: dev_client
+  PROJECT_PATH: unity_client
 
 jobs:
   variables:
