@@ -1,6 +1,8 @@
 name: Build project & release
-
 on:
+  push:
+    branches:
+      - main
   workflow_dispatch:
     inputs:
       live_production:
@@ -18,9 +20,10 @@ on:
         required: true
         type: boolean
         default: false
-        
+
 env:
   PROJECT_PATH: unity_client
+
 jobs:
   variables:
     name: Define variables 🔗
@@ -79,7 +82,7 @@ jobs:
             Library-${{ env.PROJECT_PATH }}-WebGL-
             Library-${{ env.PROJECT_PATH }}-
             Library-
-  
+
       - name: Build project
         uses: game-ci/unity-builder@v2
         env:
