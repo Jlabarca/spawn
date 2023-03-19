@@ -1,4 +1,3 @@
-# Build and upload the project by pushing tags (also works manually)
 name: Build project & release
 
 on:
@@ -56,56 +55,34 @@ jobs:
           echo "TAG -> ${{ steps.set_tag.outputs.VERSION }}"
           echo "BUILD_NAME -> ${{ steps.set_build_name.outputs.VERSION }}"
 
-  # tagVersionMatchTest:
-  #   needs: [ variables ]
-  #   name: Check tag version match ☑
-  #   runs-on: ubuntu-latest
-  #   steps:
-
-  #     - name: Log tag and version
-  #       run: echo "Github tag '${{ needs.variables.outputs.TAG }}' has to start with unity version '${{ needs.variables.outputs.UNITY_VERSION }}'"
-
-  #     - name: Version match ✔
-  #       if: startsWith(${{ needs.variables.outputs.TAG }}, {{ needs.variables.outputs.UNITY_VERSION }}
-  #       run: echo "Versions are matching 🥳"
-
-  #     - name: Version missmatch ❌
-  #       if: ${{ !startsWith(needs.variables.outputs.TAG, needs.variables.outputs.UNITY_VERSION) }}
-  #       uses: actions/github-script@v3
-  #       with:
-  #         script: |
-  #             core.setFailed('Unity version does not match tag version')
-
   buildProject:
-    name: Create Unity WebGL Build 🏗
-    # only build with additional parameters, the tag alone should only create a release draft
-    if: ${{ needs.variables.outputs.TAG != needs.variables.outputs.UNITY_VERSION }}
+    name: Create Unity Build 🏗
     needs: [ variables ]
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
+      matrix:
+        projectPath:
+          - test-projects/test-project
+        # targetPlatform:
+        #   # - StandaloneOSX # Build a macOS standalone (Intel 64-bit).
+        #   # - StandaloneWindows64 # Build a Windows 64-bit standalone.
+        #   # - StandaloneLinux64 # Build a Linux 64-bit standalone.
+        #   # - iOS # Build an iOS player.
+        #   - WebGL
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
           lfs: true
 
-      # Unity 2020 cache is not compatible with older versions
       - name: Unity Library Cache 2020 or higher
-        if: ${{ !startsWith(needs.variables.outputs.UNITY_VERSION, '201') }}
         uses: actions/cache@v3
         with:
-          path: Library
+          path: unity_client/Library
           key: Library-202x-WebGL
           restore-keys: Library-202x-
 
-      - name: Unity Library Cache 2019 or lower
-        if: ${{ startsWith(needs.variables.outputs.UNITY_VERSION, '201') }}
-        uses: actions/cache@v3
-        with:
-          path: Library
-          key: Library-201x-WebGL
-          restore-keys: Library-201x-
 
       - name: Build project
         uses: game-ci/unity-builder@v2
@@ -114,6 +91,7 @@ jobs:
         with:
           buildMethod: UnityBuilderAction.BuildScript.BuildWithCommandlineArgs
           customParameters: -tag ${{ needs.variables.outputs.TAG }}
+          projectPath: unity_client
           targetPlatform: WebGL
           buildName: ${{ needs.variables.outputs.BUILD_NAME }}
 
