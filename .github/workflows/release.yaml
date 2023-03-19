@@ -192,4 +192,4 @@ jobs:
           script: |
             rm -rf ./html/dev/
             mkdir ./html/dev/
-            rsync -a ./${{ needs.variables.outputs.TAG}}/${{ needs.variables.outputs.BUILD_NAME }} ./html/dev/
+            rsync -a ./${{ needs.variables.outputs.TAG}}/${{ needs.variables.outputs.BUILD_NAME }}/ ./html/dev/
