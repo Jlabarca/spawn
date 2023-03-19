@@ -124,6 +124,8 @@ jobs:
 
   createRelease:
     name: Create Github release 🐙
+    permissions:
+      contents: write
     if: ${{inputs.release}}
     needs: [ variables ]
     runs-on: ubuntu-latest
@@ -180,7 +182,7 @@ jobs:
           script: |
             rm -rf ./html
             mkdir html
-            rsync -a ./${{ needs.variables.outputs.TAG}}/${{ needs.variables.outputs.BUILD_NAME }} ./html/
+            rsync -a ./${{ needs.variables.outputs.TAG}}/${{ needs.variables.outputs.BUILD_NAME }}/ ./html/
 
       - name: Live to development
         if: ${{inputs.live_development}}
