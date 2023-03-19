@@ -99,29 +99,30 @@ namespace UnityBuilderAction
 						}
 						else
 						{
-							PlayerSettings.WebGL.template = "PROJECT:Develop";
-							// By default use the speed setting
+							PlayerSettings.WebGL.template = "PROJECT:Release";
 							SetWebGlOptimization("speed");
-						}
-
-						if (tagParameters.Contains("webgl2") && !tagParameters.Contains("webgl1"))
-						{
-							PlayerSettings.SetGraphicsAPIs(BuildTarget.WebGL, new[] { GraphicsDeviceType.OpenGLES3 });
+							PlayerSettings.WebGL.exceptionSupport = WebGLExceptionSupport.None;
+							PlayerSettings.SetIl2CppCompilerConfiguration(BuildTargetGroup.WebGL, Il2CppCompilerConfiguration.Master);
 						}
 
 						if (tagParameters.Contains("webgl1") && !tagParameters.Contains("webgl2"))
 						{
 							PlayerSettings.SetGraphicsAPIs(BuildTarget.WebGL, new[] { GraphicsDeviceType.OpenGLES2 });
 						}
-
-						if (tagParameters.Contains("webgl1") && tagParameters.Contains("webgl2"))
+						else if (tagParameters.Contains("webgl1") && tagParameters.Contains("webgl2"))
 						{
 							PlayerSettings.SetGraphicsAPIs(BuildTarget.WebGL, new[] { GraphicsDeviceType.OpenGLES2, GraphicsDeviceType.OpenGLES3 });
 						}
+						else {
+							PlayerSettings.SetGraphicsAPIs(BuildTarget.WebGL, new[] { GraphicsDeviceType.OpenGLES3 });
+						}
 					} else {
 						Debug.Log("No tag found, using default settings");
-						PlayerSettings.WebGL.template = "PROJECT:Develop";
+						PlayerSettings.WebGL.template = "PROJECT:Release";
 						SetWebGlOptimization("speed");
+						PlayerSettings.WebGL.exceptionSupport = WebGLExceptionSupport.None;
+						PlayerSettings.SetIl2CppCompilerConfiguration(BuildTargetGroup.WebGL, Il2CppCompilerConfiguration.Master);
+						PlayerSettings.SetGraphicsAPIs(BuildTarget.WebGL, new[] { GraphicsDeviceType.OpenGLES3 });
 					}
 
 					break;
