@@ -133,16 +133,8 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          body: |
-            ## Changes
-            *
-
-            [${{ needs.variables.outputs.UNITY_VERSION }}-webgl2](https://deml.io/experiments/unity-webgl/${{ needs.variables.outputs.UNITY_VERSION }}-webgl2/)
-            [${{ needs.variables.outputs.UNITY_VERSION }}-webgl1](https://deml.io/experiments/unity-webgl/${{ needs.variables.outputs.UNITY_VERSION }}-webgl1/)
-            [${{ needs.variables.outputs.UNITY_VERSION }}-urp-webgl2 Demo](https://deml.io/experiments/unity-webgl/${{ needs.variables.outputs.UNITY_VERSION }}-urp-webgl2/)
-            [${{ needs.variables.outputs.UNITY_VERSION }}-urp-webgl1 Demo](https://deml.io/experiments/unity-webgl/${{ needs.variables.outputs.UNITY_VERSION }}-urp-webgl1/)
-            [${{ needs.variables.outputs.UNITY_VERSION }}-minsize-webgl1 Demo](https://deml.io/experiments/unity-webgl/${{ needs.variables.outputs.UNITY_VERSION }}-minsize-webgl1/)
-          draft: true
+          draft: false
+          generate_release_notes: true
 
 
   deployOnServer:
