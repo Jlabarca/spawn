@@ -75,8 +75,8 @@ namespace UnityBuilderAction
 					    !string.IsNullOrEmpty(tagVersion))
 					{
 						string[] tagParameters = tagVersion.Split('-');
-						Debug.Log("Tag {0}" , tagVersion);
-						Debug.Log("Tag parameters: " + string.Join(", ", tagParameters));
+						Console.WriteLine($"tagVersion: {tagVersion}");
+						Console.WriteLine($"Tag parameters {string.Join(", ", tagParameters)}");
 						if (tagParameters.Contains("minsize"))
 						{
 							PlayerSettings.WebGL.template = "PROJECT:Release";
@@ -117,7 +117,7 @@ namespace UnityBuilderAction
 							PlayerSettings.SetGraphicsAPIs(BuildTarget.WebGL, new[] { GraphicsDeviceType.OpenGLES3 });
 						}
 					} else {
-						Debug.Log("No tag found, using default settings");
+						Console.WriteLine("No tag found, using default settings");
 						PlayerSettings.WebGL.template = "PROJECT:Release";
 						SetWebGlOptimization("speed");
 						PlayerSettings.WebGL.exceptionSupport = WebGLExceptionSupport.None;
