@@ -24,7 +24,8 @@ on:
         required: false
         type: string
         default: '-accept-apiupdate'
-
+env:
+  PROJECT_PATH: unity_client
 jobs:
   upgrade-unity-version:
     name: Upgrade Unity version and packages
@@ -71,7 +72,7 @@ jobs:
       - name: Set last unity version
         id: last_unity_version
         run: |
-          LAST_UNITY_VERSION=$(sed -n 's/^\m_EditorVersion: //p'< ./ProjectSettings/ProjectVersion.txt)
+          LAST_UNITY_VERSION=$(sed -n 's/^\m_EditorVersion: //p'< ./${{ env.PROJECT_PATH }}/ProjectSettings/ProjectVersion.txt)
           echo "VERSION=$LAST_UNITY_VERSION" >> $GITHUB_OUTPUT
 
       - name: Set upgrade name

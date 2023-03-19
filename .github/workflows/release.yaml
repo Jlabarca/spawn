@@ -1,8 +1,8 @@
 name: Build project & release
 on:
-  push:
-    branches:
-      - main
+  # push:
+  #   branches:
+  #     - main
   workflow_dispatch:
     inputs:
       live_production:
@@ -41,7 +41,7 @@ jobs:
       - name: Set unity version
         id: set_unity_version
         run: |
-          UNITY_VERSION=$(sed -n 's/^\m_EditorVersion: //p'< ./ProjectSettings/ProjectVersion.txt)
+          UNITY_VERSION=$(sed -n 's/^\m_EditorVersion: //p'< ./${{ env.PROJECT_PATH }}/ProjectSettings/ProjectVersion.txt)
           echo "VERSION=$UNITY_VERSION" >> $GITHUB_OUTPUT
 
       - name: Set tag
