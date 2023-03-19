@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.3708625, g: 0.37838694, b: 0.35726872, a: 1}
+  m_IndirectSpecularColor: {r: 0.37311953, g: 0.38074014, b: 0.3587274, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -465,6 +465,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1665109046784520929, guid: 1b4fdc6f1968a43d68ee82dc0c862785, type: 3}
+      propertyPath: IsDevNetLogin
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1665109046784520929, guid: 1b4fdc6f1968a43d68ee82dc0c862785, type: 3}
       propertyPath: MainNetRpcUrl
       value: https://light-red-uranium.solana-mainnet.quiknode.pro/9d63f34cfe3e6e00543a34ff3f19855e537f0a99/
       objectReference: {fileID: 0}
@@ -487,6 +491,18 @@ PrefabInstance:
     - target: {fileID: 1665109046784520929, guid: 1b4fdc6f1968a43d68ee82dc0c862785, type: 3}
       propertyPath: PhantomWalletCluster
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1665109046784520929, guid: 1b4fdc6f1968a43d68ee82dc0c862785, type: 3}
+      propertyPath: AutomaticallyConnectWebSocket
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1665109046784520929, guid: 1b4fdc6f1968a43d68ee82dc0c862785, type: 3}
+      propertyPath: PhantomWalletOptions.appMetaDataUrl
+      value: https://spawn.cards
+      objectReference: {fileID: 0}
+    - target: {fileID: 1665109046784520929, guid: 1b4fdc6f1968a43d68ee82dc0c862785, type: 3}
+      propertyPath: PhantomWalletOptions.deeplinkUrlScheme
+      value: spawn
       objectReference: {fileID: 0}
     - target: {fileID: 1665109048114779308, guid: 1b4fdc6f1968a43d68ee82dc0c862785, type: 3}
       propertyPath: PollLatestBlockHash
