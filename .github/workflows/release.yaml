@@ -22,7 +22,7 @@ on:
         default: false
 
 env:
-  PROJECT_PATH: unity_client
+  PROJECT_PATH: spawn_client/unity_client
 
 jobs:
   variables:
@@ -37,6 +37,7 @@ jobs:
         with:
           fetch-depth: 0
           lfs: true
+          submodules: recursive
 
       - name: Set unity version
         id: set_unity_version
