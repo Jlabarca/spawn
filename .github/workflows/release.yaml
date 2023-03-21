@@ -34,11 +34,13 @@ jobs:
       BUILD_NAME: ${{ steps.set_build_name.outputs.VERSION }}
     steps:
       - uses: actions/checkout@v3
+
+      - name: Add SSH private keys for submodule repositories
+        uses: webfactory/ssh-agent@0.7.0
         with:
-          token: ${{ secrets.PR_GITHUB_TOKEN }}
-          submodules: recursive
-          fetch-depth: 0
-          lfs: true
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - run: git submodule update --init --recursive --remote
 
       - name: Set unity version
         id: set_unity_version
@@ -71,11 +73,13 @@ jobs:
       fail-fast: false
     steps:
       - uses: actions/checkout@v3
+
+      - name: Add SSH private keys for submodule repositories
+        uses: webfactory/ssh-agent@0.7.0
         with:
-          token: ${{ secrets.PR_GITHUB_TOKEN }}
-          submodules: recursive
-          fetch-depth: 0
-          lfs: true
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - run: git submodule update --init --recursive --remote
 
       - name: Unity Library Cache 2020 or higher
         uses: actions/cache@v3
