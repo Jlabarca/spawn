@@ -113,7 +113,7 @@ namespace SolPlay.Scripts.Services
         public void Connect(string rpcUrl)
         {
             System.Net.ServicePointManager.ServerCertificateValidationCallback = (message, cert, chain, sslPolicyErrors) => true;
-            
+
             if (websocket != null)
             {
                 websocket.OnOpen -= websocketOnOnOpen();
@@ -125,10 +125,10 @@ namespace SolPlay.Scripts.Services
 
             SetSocketUrl(rpcUrl);
             Debug.Log("Connect Socket: " + socketUrl);
-            
-#if UNITY_WEBGL 
+
+#if UNITY_WEBGL
             websocket = new WebSocket(socketUrl);
-#else 
+#else
             websocket = new SharpWebSockets(socketUrl);
 #endif
 
@@ -137,7 +137,7 @@ namespace SolPlay.Scripts.Services
             websocket.OnClose += OnWebSocketClosed;
             websocket.OnMessage += websocketOnOnMessage();
             websocket.Connect();
-            
+
             Debug.Log("Socket connect done");
         }
 
@@ -185,7 +185,7 @@ namespace SolPlay.Scripts.Services
         {
             return (e) =>
             {
-                Debug.LogError("Error! " + e);
+                Debug.Log("Error! " + e);
             };
         }
 
@@ -278,7 +278,7 @@ namespace SolPlay.Scripts.Services
             {
                 subscriptions.Add(pubkey, socketSubscription);
             }
-            
+
             if (websocket.State == WebSocketState.Open)
             {
                 string accountSubscribeParams =
