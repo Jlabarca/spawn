@@ -39,12 +39,12 @@ jobs:
             fetch-depth: 0
             lfs: true
 
-      - name: Add SSH private keys for submodule repositories
-        uses: webfactory/ssh-agent@v0.7.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - run: git submodule update --init --recursive --remote
+      - name: Get submodules
+        env:
+          SSH_KEY_SUBMODULE: ${{secrets. SSH_PRIVATE_KEY}}
+        run: |
+          eval `ssh-agent -s`
+          ssh-add - <<< "${SSH_KEY_SUBMODULE}"; git submodule update --init --recursive --remote
 
       - name: Set unity version
         id: set_unity_version
@@ -82,12 +82,12 @@ jobs:
           fetch-depth: 0
           lfs: true
 
-      - name: Add SSH private keys for submodule repositories
-        uses: webfactory/ssh-agent@v0.7.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
-
-      - run: git submodule update --init --recursive --remote
+      - name: Get submodules
+        env:
+          SSH_KEY_SUBMODULE: ${{secrets. SSH_PRIVATE_KEY}}
+        run: |
+          eval `ssh-agent -s`
+          ssh-add - <<< "${SSH_KEY_SUBMODULE}"; git submodule update --init --recursive --remote
 
       - name: Unity Library Cache 2020 or higher
         uses: actions/cache@v3
