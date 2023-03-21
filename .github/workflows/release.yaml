@@ -22,7 +22,7 @@ on:
         default: false
 
 env:
-  PROJECT_PATH: spawn_client/unity_client
+  PROJECT_PATH: spawn_client/quantum_unity
 
 jobs:
   variables:
