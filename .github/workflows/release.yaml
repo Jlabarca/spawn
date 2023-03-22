@@ -38,7 +38,6 @@ jobs:
           # token: ${{ secrets.PR_GITHUB_TOKEN }}
           fetch-depth: 0
           lfs: true
-          shell: bash
           run: |
             git config --global url."https://github.com/".insteadOf "git@github.com:"
             git submodule sync --recursive
@@ -79,7 +78,6 @@ jobs:
           # token: ${{ secrets.PR_GITHUB_TOKEN }}
           fetch-depth: 0
           lfs: true
-          shell: bash
           run: |
             git config --global url."https://github.com/".insteadOf "git@github.com:"
             git submodule sync --recursive
