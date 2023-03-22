@@ -33,11 +33,13 @@ jobs:
       TAG: ${{ steps.set_tag.outputs.VERSION }}
       BUILD_NAME: ${{ steps.set_build_name.outputs.VERSION }}
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           # token: ${{ secrets.PR_GITHUB_TOKEN }}
           fetch-depth: 0
           lfs: true
+
+      - name: checkout submodule
           run: |
             git config --global url."https://github.com/".insteadOf "git@github.com:"
             git submodule sync --recursive
@@ -73,11 +75,13 @@ jobs:
     strategy:
       fail-fast: false
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
         with:
           # token: ${{ secrets.PR_GITHUB_TOKEN }}
           fetch-depth: 0
           lfs: true
+
+      - name: checkout submodule
           run: |
             git config --global url."https://github.com/".insteadOf "git@github.com:"
             git submodule sync --recursive
