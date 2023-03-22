@@ -40,10 +40,6 @@ jobs:
           lfs: true
           submodules: recursive
       - run: git submodule update --remote --force --recursive --depth=1
-      # - run: |
-      #     git config --global url."https://github.com/".insteadOf "git@github.com:"
-      #     git -c "http.extraheader=Authorization: basic ${{secrets.PR_GITHUB_TOKEN}}" -c protocol.version=2 submodule update --init --force --recursive --depth=1
-
 
       - name: Set unity version
         id: set_unity_version
@@ -80,6 +76,7 @@ jobs:
           token: ${{ secrets.PR_GITHUB_TOKEN }}
           fetch-depth: 0
           lfs: true
+          submodules: recursive
       - run: git submodule update --remote --force --recursive --depth=1
 
       - name: Unity Library Cache 2020 or higher
