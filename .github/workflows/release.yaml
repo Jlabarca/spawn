@@ -77,7 +77,6 @@ jobs:
           fetch-depth: 0
           lfs: true
           submodules: recursive
-      - run: git submodule update --remote --force --recursive --depth=1
 
       - name: Unity Library Cache 2020 or higher
         uses: actions/cache@v3
@@ -90,7 +89,9 @@ jobs:
             Library-
 
       - name: Build project
-        uses: game-ci/unity-builder@v2
+        #uses: game-ci/unity-builder@v2
+        uses: ./.github/actions/AndrewKahr/unity-builder
+
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
