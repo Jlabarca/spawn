@@ -90,7 +90,7 @@ jobs:
 
       - name: Build project
         #uses: game-ci/unity-builder@main
-        uses: Jlabarca/unity-builder@main
+        uses: Jlabarca/unity-builder@misc-fixes
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
         with:
