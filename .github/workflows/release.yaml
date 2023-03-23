@@ -99,6 +99,7 @@ jobs:
           projectPath: ${{ env.PROJECT_PATH }}
           targetPlatform: WebGL
           buildName: ${{ needs.variables.outputs.BUILD_NAME }}
+          allowDirtyBuild: true
 
       - uses: actions/upload-artifact@v3
         with:
