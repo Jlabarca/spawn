@@ -1,0 +1,25 @@
+#!/bin/bash
+
+if [ "$#" -ne 1 ]; then
+    echo "Illegal number of parameters"
+    exit
+fi
+
+SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+cd "${SCRIPT_DIR}/spawn_client" 
+git status
+git add -A
+git commit -m "$1"
+
+cd "${SCRIPT_DIR}/spawn_client/quantum_unity/Assets/[External]" 
+git status
+git add -A
+git commit -m "$1"
+
+printf "\n\nUpdating Super Project\n\n" 
+cd  "${SCRIPT_DIR}"
+git status
+git add -A
+git commit -m "All Submodules Updated - $1"
+git push --recurse-submodules=on-demand
