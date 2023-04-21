@@ -8,7 +8,6 @@ fi
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd "${SCRIPT_DIR}/../spawn_client/quantum_unity/Assets/[External]"
-git pull
 git switch main
 git status
 git add -A
@@ -16,7 +15,6 @@ git commit -m "$1"
 
 
 cd "${SCRIPT_DIR}/../spawn_client"
-git pull
 git switch main
 git status
 git add -A
@@ -24,7 +22,6 @@ git commit -m "$1"
 
 printf "\n\nUpdating Super Project\n\n"
 cd  "${SCRIPT_DIR}"
-git pull
 git switch main
 git status
 git add -A
