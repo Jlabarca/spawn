@@ -5,6 +5,8 @@ if [ "$#" -ne 1 ]; then
     exit
 fi
 
+git submodule update --init --recursive
+
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 cd "${SCRIPT_DIR}/../spawn_client/quantum_unity/Assets/[External]"
@@ -21,5 +23,5 @@ printf "\n\nUpdating Super Project\n\n"
 cd  "${SCRIPT_DIR}"
 git status
 git add -A
-git commit -m "All Submodules Updated - $1"
+git commit -m "All - $1"
 git push --recurse-submodules=on-demand
