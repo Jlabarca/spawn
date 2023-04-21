@@ -22,7 +22,6 @@ git commit -m "$1"
 
 printf "\n\nUpdating Super Project\n\n"
 cd  "${SCRIPT_DIR}"
-git switch main
 git status
 git add -A
 git commit -m "All - $1"
